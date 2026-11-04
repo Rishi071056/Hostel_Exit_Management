@@ -1,0 +1,265 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard | Hostel EMS</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body class="dashboard-body">
+
+<div class="dashboard-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <a href="#" class="logo">
+            <span class="logo-icon">⌂</span>
+            Hostel<span>EMS</span>
+        </a>
+
+        <div class="sidebar-profile">
+            <div class="profile-avatar">🎓</div>
+            <h3 id="sidebarName">Student</h3>
+            <p id="sidebarRoll">Student Account</p>
+        </div>
+
+        <p class="menu-heading">MAIN MENU</p>
+
+        <nav class="sidebar-menu">
+            <a href="#overview" class="menu-link active">▦ Dashboard</a>
+            <a href="#exitRequests" class="menu-link">↗ Exit Requests</a>
+            <a href="#digitalReceipt" class="menu-link">🎫 Digital Receipt</a>
+            <a href="#complaints" class="menu-link">♧ Complaints</a>
+            <a href="#profile" class="menu-link">♙ My Profile</a>
+        </nav>
+
+        <button class="sidebar-logout" onclick="logout()">↪ Logout</button>
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="dashboard-main">
+
+        <header class="dashboard-header">
+            <div>
+                <h2>Student Dashboard</h2>
+                <p>Manage your hostel activities in one place.</p>
+            </div>
+
+            <div class="header-user">
+                <span>🔔</span>
+                <div class="small-avatar">🎓</div>
+            </div>
+        </header>
+
+
+        <!-- OVERVIEW -->
+        <section id="overview">
+            <div class="welcome-banner">
+                <div>
+                    <span>STUDENT PORTAL</span>
+                    <h1>Welcome back, <strong id="welcomeName">Student</strong> 👋</h1>
+                    <p>Here's what's happening with your hostel account.</p>
+                </div>
+                <div class="welcome-icon">🎓</div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card purple-stat">
+                    <span>↗</span>
+                    <p>Total Exit Requests</p>
+                    <h2 id="totalRequests">--</h2>
+                </div>
+
+                <div class="stat-card pink-stat">
+                    <span>♧</span>
+                    <p>Total Complaints</p>
+                    <h2 id="totalComplaints">--</h2>
+                </div>
+
+                <div class="stat-card orange-stat">
+                    <span>◷</span>
+                    <p>Pending Requests</p>
+                    <h2 id="pendingRequests">--</h2>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- QUICK ACTIONS -->
+        <section class="dashboard-section">
+            <div class="section-title">
+                <h2>Quick Actions</h2>
+                <p>Choose what you want to do today.</p>
+            </div>
+
+            <div class="action-grid">
+                <button class="action-card" onclick="openSection('exitRequests')">
+                    <span>↗</span>
+                    <h3>Request Exit</h3>
+                    <p>Submit a new hostel exit request.</p>
+                </button>
+
+                <button class="action-card" onclick="openSection('complaints')">
+                    <span>♧</span>
+                    <h3>Raise Complaint</h3>
+                    <p>Report a hostel-related issue.</p>
+                </button>
+
+                <button class="action-card" onclick="openSection('profile')">
+                    <span>♙</span>
+                    <h3>My Profile</h3>
+                    <p>View your student information.</p>
+                </button>
+            </div>
+        </section>
+
+
+        <!-- DIGITAL EXIT RECEIPT -->
+        <section class="dashboard-section dashboard-panel" id="digitalReceipt">
+            <div class="section-title">
+                <div>
+                    <h2>My Digital Exit Receipt 🎫</h2>
+                    <p>Show this receipt number to the guard when you return.</p>
+                </div>
+            </div>
+
+            <div id="activeReceiptContainer">
+                <p>Loading your digital receipt...</p>
+            </div>
+        </section>
+
+
+        <!-- EXIT REQUESTS -->
+        <section class="dashboard-section dashboard-panel" id="exitRequests">
+            <div class="section-title">
+                <div>
+                    <h2>My Exit Requests</h2>
+                    <p>View and submit your exit requests.</p>
+                </div>
+                <button class="dashboard-button" onclick="showExitForm()">
+                    + New Request
+                </button>
+            </div>
+
+            <form id="exitForm" class="dashboard-form hidden">
+                <h3>New Exit Request</h3>
+
+                <label>Destination</label>
+                <input id="exitDestination" type="text"
+                    placeholder="Where are you going?" required>
+
+                <label>Purpose</label>
+                <input id="exitPurpose" type="text"
+                    placeholder="Reason for leaving" required>
+
+                <label>Expected Return Date and Time</label>
+                <input id="returnTime" type="datetime-local" required>
+
+                <button class="dashboard-button" type="submit">
+                    Submit Request
+                </button>
+            </form>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Purpose</th>
+                            <th>Exit Time</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="requestsTable">
+                        <tr>
+                            <td colspan="4">Loading your requests...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+
+        <!-- COMPLAINTS -->
+        <section class="dashboard-section dashboard-panel" id="complaints">
+            <div class="section-title">
+                <div>
+                    <h2>My Complaints</h2>
+                    <p>Submit and track hostel complaints.</p>
+                </div>
+                <button class="dashboard-button" onclick="showComplaintForm()">
+                    + New Complaint
+                </button>
+            </div>
+
+            <form id="complaintForm" class="dashboard-form hidden">
+                <h3>Submit a Complaint</h3>
+
+                <label>Category</label>
+                <select id="complaintCategory" required>
+                    <option value="">Select category</option>
+                    <option value="Hostel Maintenance">Hostel Maintenance</option>
+                    <option value="Electrical">Electrical</option>
+                    <option value="Water Supply">Water Supply</option>
+                    <option value="Cleanliness">Cleanliness</option>
+                    <option value="Other">Other</option>
+                </select>
+
+                <label>Description</label>
+                <textarea id="complaintDescription" rows="4"
+                    placeholder="Describe your problem..." required></textarea>
+
+                <button class="dashboard-button" type="submit">
+                    Submit Complaint
+                </button>
+            </form>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Category</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                            <th>Response</th>
+                        </tr>
+                    </thead>
+                    <tbody id="complaintsTable">
+                        <tr>
+                            <td colspan="4">Loading your complaints...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+
+        <!-- PROFILE -->
+        <section class="dashboard-section dashboard-panel" id="profile">
+            <div class="section-title">
+                <div>
+                    <h2>My Profile</h2>
+                    <p>Your registered student information.</p>
+                </div>
+            </div>
+
+            <div class="profile-details" id="profileDetails">
+                Loading profile...
+            </div>
+        </section>
+
+
+        <footer class="dashboard-footer">
+            Hostel EMS · Student Portal · 2026
+        </footer>
+
+    </main>
+</div>
+
+<script src="student.js"></script>
+</body>
+</html>

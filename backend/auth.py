@@ -43,12 +43,7 @@ def verify_access_token(token: str):
             JWT_SECRET_KEY,
             algorithms=[JWT_ALGORITHM]
         )
-
-        print("TOKEN PAYLOAD:", payload)
-
         return payload
 
-    except JWTError as e:
-        print("JWT ERROR:", repr(e))
+    except JWTError:
         return None
-    

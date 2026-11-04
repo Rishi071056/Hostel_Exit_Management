@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warden Dashboard | Hostel EMS</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body class="dashboard-body">
+
+<div class="dashboard-layout">
+
+    <aside class="sidebar">
+        <a href="#" class="logo">
+            <span class="logo-icon">⌂</span>
+            Hostel<span>EMS</span>
+        </a>
+
+        <div class="sidebar-profile">
+            <div class="profile-avatar">🛡️</div>
+            <h3 id="wardenName">Warden</h3>
+            <p>Hostel Administrator</p>
+        </div>
+
+        <p class="menu-heading">MANAGEMENT</p>
+
+        <nav class="sidebar-menu">
+            <a href="#overview" class="menu-link active">▦ Dashboard</a>
+            <a href="#registrations" class="menu-link">♙ Student Registrations</a>
+            <a href="#requests" class="menu-link">↗ Exit Requests</a>
+            <a href="#complaints" class="menu-link">♧ Complaints</a>
+            <a href="#guards" class="menu-link">♙ Guard Approvals</a>
+            <a href="#outside" class="menu-link">◷ Students Outside</a>
+        </nav>
+
+        <button class="sidebar-logout" onclick="logout()">↪ Logout</button>
+    </aside>
+
+
+    <main class="dashboard-main">
+
+        <header class="dashboard-header">
+            <div>
+                <h2>Warden Control Center</h2>
+                <p>Monitor and manage hostel activities.</p>
+            </div>
+
+            <div class="header-user">
+                <span>🔔</span>
+                <div class="small-avatar">🛡️</div>
+            </div>
+        </header>
+
+
+        <!-- OVERVIEW -->
+
+        <section id="overview">
+
+            <div class="welcome-banner">
+                <div>
+                    <span>ADMINISTRATOR PORTAL</span>
+                    <h1>Welcome, <strong id="welcomeWarden">Warden</strong> 👋</h1>
+                    <p>Your central hub for hostel security and management.</p>
+                </div>
+
+                <div class="welcome-icon">🛡️</div>
+            </div>
+
+            <div class="stats-grid">
+
+                <div class="stat-card purple-stat">
+                    <span>↗</span>
+                    <p>Pending Requests</p>
+                    <h2 id="pendingCount">--</h2>
+                </div>
+
+                <div class="stat-card pink-stat">
+                    <span>♧</span>
+                    <p>Total Complaints</p>
+                    <h2 id="complaintCount">--</h2>
+                </div>
+
+                <div class="stat-card orange-stat">
+                    <span>◷</span>
+                    <p>Students Outside</p>
+                    <h2 id="outsideCount">--</h2>
+                </div>
+
+                <div class="stat-card purple-stat">
+                    <span>♙</span>
+                    <p>Pending Registrations</p>
+                    <h2 id="registrationCount">--</h2>
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- PENDING STUDENT REGISTRATIONS -->
+
+        <section class="dashboard-section dashboard-panel" id="registrations">
+
+            <div class="section-title">
+                <div>
+                    <h2>Pending Student Registrations</h2>
+                    <p>Verify students who have completed email OTP verification and approve their accounts.</p>
+                </div>
+
+                <button class="dashboard-button" onclick="loadStudentRegistrations()">
+                    ↻ Refresh
+                </button>
+            </div>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Roll Number</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Hostel</th>
+                            <th>Room</th>
+                            <th>Branch</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="pendingRegistrations">
+                        <tr>
+                            <td colspan="8">Loading student registrations...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </section>
+
+
+        <!-- EXIT REQUESTS -->
+
+        <section class="dashboard-section dashboard-panel" id="requests">
+
+            <div class="section-title">
+                <div>
+                    <h2>Pending Exit Requests</h2>
+                    <p>Review student exit applications.</p>
+                </div>
+
+                <button class="dashboard-button" onclick="loadRequests()">
+                    ↻ Refresh
+                </button>
+            </div>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Student</th>
+                            <th>Destination</th>
+                            <th>Purpose</th>
+                            <th>Expected Return</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="wardenRequests">
+                        <tr>
+                            <td colspan="5">Loading requests...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </section>
+
+
+        <!-- COMPLAINTS -->
+
+        <section class="dashboard-section dashboard-panel" id="complaints">
+
+            <div class="section-title">
+                <div>
+                    <h2>Student Complaints</h2>
+                    <p>Review and update complaint status.</p>
+                </div>
+
+                <button class="dashboard-button" onclick="loadComplaints()">
+                    ↻ Refresh
+                </button>
+            </div>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Student</th>
+                            <th>Category</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="wardenComplaints">
+                        <tr>
+                            <td colspan="5">Loading complaints...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </section>
+
+
+        <!-- GUARD APPROVALS -->
+
+        <section class="dashboard-section dashboard-panel" id="guards">
+
+            <div class="section-title">
+                <div>
+                    <h2>Guard Approvals</h2>
+                    <p>Approve new security guard registrations.</p>
+                </div>
+
+                <button class="dashboard-button" onclick="loadGuards()">
+                    ↻ Refresh
+                </button>
+            </div>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Guard ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="wardenGuards">
+                        <tr>
+                            <td colspan="4">Loading guards...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </section>
+
+
+        <!-- STUDENTS OUTSIDE -->
+
+        <section class="dashboard-section dashboard-panel" id="outside">
+
+            <div class="section-title">
+                <div>
+                    <h2>Students Currently Outside</h2>
+                    <p>Monitor students who have exited the hostel.</p>
+                </div>
+
+                <button class="dashboard-button" onclick="loadOutsideStudents()">
+                    ↻ Refresh
+                </button>
+            </div>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Student Roll Number</th>
+                            <th>Request ID</th>
+                            <th>Exit Time</th>
+                            <th>Expected Return</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="outsideStudents">
+                        <tr>
+                            <td colspan="4">Loading students...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </section>
+
+
+        <footer class="dashboard-footer">
+            Hostel EMS · Warden Portal · 2026
+        </footer>
+
+    </main>
+</div>
+
+<script src="warden.js"></script>
+
+</body>
+</html>

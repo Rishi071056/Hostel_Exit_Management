@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hostel EMS | Create Account</title>
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .register-wrapper {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 35px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 12px 40px rgba(45, 30, 90, 0.12);
+        }
+
+        .register-wrapper h1 {
+            color: #4c1d95;
+            margin-bottom: 8px;
+        }
+
+        .register-wrapper > p {
+            color: #777;
+            margin-bottom: 25px;
+        }
+
+        .role-options {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .role-options button {
+            flex: 1;
+            padding: 14px;
+            border: 1px solid #ddd;
+            border-radius: 9px;
+            background: #f8f7fc;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .role-options button.active {
+            color: white;
+            background: #6d28d9;
+            border-color: #6d28d9;
+        }
+
+        .register-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 17px;
+        }
+
+        .register-form .field {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        .register-form .full {
+            grid-column: 1 / -1;
+        }
+
+        .register-form label {
+            color: #444;
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .register-form input,
+        .register-form select {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #ddd;
+            border-radius: 9px;
+            box-sizing: border-box;
+            font-size: 15px;
+        }
+
+        .register-form input:focus,
+        .register-form select:focus {
+            outline: none;
+            border-color: #6d28d9;
+        }
+
+        .register-form button {
+            grid-column: 1 / -1;
+            padding: 15px;
+            border: 0;
+            border-radius: 9px;
+            background: #6d28d9;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .register-form button:disabled {
+            opacity: .6;
+            cursor: wait;
+        }
+
+        /* Photo preview */
+        .photo-preview-box {
+            display: none;
+            margin-top: 12px;
+            padding: 12px;
+            border: 1px dashed #a78bfa;
+            border-radius: 10px;
+            background: #f8f5ff;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .photo-preview-box img {
+            width: 110px;
+            height: 110px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 2px solid #6d28d9;
+        }
+
+        .photo-info {
+            color: #4c1d95;
+            font-size: 14px;
+            overflow-wrap: anywhere;
+        }
+
+        #registerMessage {
+            margin-top: 18px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 22px;
+            color: #6d28d9;
+        }
+
+        @media(max-width: 600px) {
+            .register-wrapper {
+                margin: 20px 12px;
+                padding: 22px;
+            }
+
+            .register-form {
+                grid-template-columns: 1fr;
+            }
+
+            .register-form .field,
+            .register-form .full {
+                grid-column: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="register-wrapper">
+
+        <h1>Create Account</h1>
+        <p>Register to use the Hostel Exit Management System.</p>
+
+        <div class="role-options">
+            <button type="button" class="active"
+                data-role="student"
+                onclick="selectRegisterRole('student')">
+                Student
+            </button>
+
+            <button type="button"
+                data-role="warden"
+                onclick="selectRegisterRole('warden')">
+                Warden
+            </button>
+
+            <button type="button"
+                data-role="guard"
+                onclick="selectRegisterRole('guard')">
+                Guard
+            </button>
+        </div>
+
+        <form id="registerForm" class="register-form">
+
+            <div class="field full" id="nameField">
+                <label for="name">Full Name</label>
+                <input id="name" name="name" required>
+            </div>
+
+            <div class="field" id="rollField">
+                <label for="roll_no">Roll Number</label>
+                <input id="roll_no" name="roll_no"
+                    placeholder="24BME115">
+            </div>
+
+            <div class="field">
+                <label for="email">Email Address</label>
+                <input id="email" name="email"
+                    type="email" required>
+            </div>
+
+            <div class="field" id="hostelField">
+                <label for="hostel">Hostel</label>
+                <input id="hostel" name="hostel">
+            </div>
+
+            <div class="field" id="roomField">
+                <label for="room_no">Room Number</label>
+                <input id="room_no" name="room_no">
+            </div>
+
+            <div class="field" id="branchField">
+                <label for="branch">Branch</label>
+                <input id="branch" name="branch">
+            </div>
+
+            <div class="field" id="yearField">
+                <label for="year">Year</label>
+                <select id="year" name="year">
+                    <option value="">Select year</option>
+                    <option value="1">1st Year</option>
+                    <option value="2">2nd Year</option>
+                    <option value="3">3rd Year</option>
+                    <option value="4">4th Year</option>
+                </select>
+            </div>
+
+            <div class="field" id="phoneField">
+                <label for="phone_number">Phone Number</label>
+                <input id="phone_number"
+                    name="phone_number"
+                    type="tel"
+                    placeholder="10-digit number">
+            </div>
+
+            <!-- Student face photo -->
+            <div class="field full" id="photoField">
+                <label for="image">Face Photo</label>
+
+                <input
+                    id="image"
+                    name="image"
+                    type="file"
+                    accept="image/*"
+                >
+
+                <!-- Selected photo preview -->
+                <div class="photo-preview-box" id="photoPreviewBox">
+                    <img id="photoPreview" src="" alt="Selected face photo">
+
+                    <div class="photo-info">
+                        <strong>Selected Photo</strong>
+                        <p id="photoFileName"></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="field full">
+                <label for="password">Password</label>
+                <input
+                    id="password"
+                    name="password"
+                    type="password"
+                    minlength="8"
+                    required
+                >
+            </div>
+
+            <button type="submit" id="registerButton">
+                Create Account
+            </button>
+
+        </form>
+
+        <p id="registerMessage"></p>
+
+        <a class="back-link" href="index.html">
+            ← Back to Login
+        </a>
+
+    </div>
+
+    <script src="register.js"></script>
+
+</body>
+</html>

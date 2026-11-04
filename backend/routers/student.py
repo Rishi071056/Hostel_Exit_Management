@@ -1,8 +1,8 @@
-from fastapi import APIRouter,Depends,UploadFile,File,Form
-from backend.schemas import StudentRegister,EmailOTPVerification,StudentLogin,ComplaintCreate,ExitRequestCreate
+from fastapi import APIRouter,Depends, HTTPException,UploadFile,File,Form
+from backend.schemas import StudentRegister,EmailOTPVerification,StudentLogin,ComplaintCreate,ExitRequestCreate,ResendOTPRequest
 from backend.crud import (create_pending_registration,verify_email_otp,login_student_with_face,login_student_with_password,
                           get_student_profile,create_complaint,get_my_complaints,create_exit_request,
-                          get_my_exit_requests,cancel_exit_request)
+                          get_my_exit_requests,cancel_exit_request,resend_student_email_otp)
 from backend.dependencies import get_current_student
 
 
@@ -61,15 +61,20 @@ async def login_face(
     
 @router.post("/login-password")
 def login_password(data: StudentLogin):
+    result = login_student_with_password(data.email, data.password)
 
-    return login_student_with_password(
-        data.email,
-        data.password
-    )
+    if "error" in result:
+        raise HTTPException(status_code=401, detail=result["error"])
+
+    return result
 
 @router.post("/verify-email")
 def verify_email(data: EmailOTPVerification):
     return verify_email_otp(data.email,data.otp)
+
+@router.post("/resend-otp")
+def resend_otp(data: ResendOTPRequest):
+    return resend_student_email_otp(data.email)
 
     
 @router.get("/profile")

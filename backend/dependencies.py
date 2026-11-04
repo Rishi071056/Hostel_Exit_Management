@@ -7,7 +7,9 @@ from backend.auth import verify_access_token
 security = HTTPBearer()
 
 
-def get_current_student(credentials: HTTPAuthorizationCredentials = Depends(security)):
+def get_current_student(
+    credentials: HTTPAuthorizationCredentials = Depends(security)
+):
     token = credentials.credentials
 
     payload = verify_access_token(token)
@@ -16,6 +18,12 @@ def get_current_student(credentials: HTTPAuthorizationCredentials = Depends(secu
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid or expired token"
+        )
+
+    if payload.get("role") != "student":
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Student access required"
         )
 
     return payload
@@ -73,5 +81,7 @@ def get_current_guard(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Guard access required"
         )
+
+    
 
     return payload

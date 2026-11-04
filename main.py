@@ -3,8 +3,17 @@ from backend.crud import get_all_students
 from backend.routers.student import router as student_router
 from backend.routers.warden import router as warden_router
 from backend.routers.guard import router as guard
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"]
+)
 
 
 @app.get("/students")

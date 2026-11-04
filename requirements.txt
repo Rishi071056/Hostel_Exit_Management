@@ -10,6 +10,6 @@ python-multipart
 dlib-bin
 git+https://github.com/ageitgey/face_recognition_models
 setuptools<70.0.0
-face-recignition
-
+face-recognition
+sib-api-v3-sdk
 

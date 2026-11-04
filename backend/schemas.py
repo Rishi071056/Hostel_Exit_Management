@@ -92,6 +92,9 @@ class EmailOTPVerification(BaseModel):
     email: str
     otp: str
 
+class ResendOTPRequest(BaseModel):
+    email: str    
+
 
 class StudentLogin(BaseModel):
     email: str
@@ -112,7 +115,7 @@ class ExitRequestCreate(BaseModel):
     expected_return: datetime
     
 class WardenRegister(BaseModel):
-    warden_id: str
+    
     name: str
     email: str
     password: str

@@ -1,0 +1,284 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guard Dashboard | Hostel EMS</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* Action buttons */
+        .action-btn {
+            background: linear-gradient(135deg, #a855f7, #6d28d9);
+            color: #ffffff;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(109, 40, 217, 0.2);
+        }
+
+        .action-btn:hover {
+            background: linear-gradient(135deg, #9333ea, #5b21b6);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(109, 40, 217, 0.3);
+        }
+
+        .action-btn:active {
+            transform: scale(0.97);
+        }
+
+        /* Return button */
+        .return-btn {
+            background: linear-gradient(135deg, #34d399, #059669);
+            box-shadow: 0 4px 12px rgba(5, 150, 105, 0.2);
+        }
+
+        .return-btn:hover {
+            background: linear-gradient(135deg, #10b981, #047857);
+        }
+
+        .status-message {
+            margin: 10px 0;
+            font-size: 14px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body class="dashboard-body">
+
+<div class="dashboard-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <a href="#" class="logo">
+            <span class="logo-icon">⌂</span>
+            Hostel<span>EMS</span>
+        </a>
+
+        <div class="sidebar-profile">
+            <div class="profile-avatar">🛡️</div>
+            <h3>Security Guard</h3>
+            <p id="guardEmail">Guard Account</p>
+        </div>
+
+        <p class="menu-heading">SECURITY MANAGEMENT</p>
+
+        <nav class="sidebar-menu">
+            <a href="#overview" class="menu-link active">▦ Dashboard</a>
+            <a href="#approvedRequests" class="menu-link">↗ Approved Requests</a>
+            <a href="#outsideStudents" class="menu-link">◷ Students Outside</a>
+            <a href="#dailyActivity" class="menu-link">♧ Daily Activity</a>
+        </nav>
+
+        <button class="sidebar-logout" onclick="guardLogout()">
+            ↪ Logout
+        </button>
+
+    </aside>
+
+    <!-- MAIN DASHBOARD -->
+    <main class="dashboard-main">
+
+        <!-- HEADER -->
+        <header class="dashboard-header">
+            <div>
+                <h2>Security Control Center</h2>
+                <p>Manage student exits and hostel returns.</p>
+            </div>
+
+            <div class="header-user">
+                <span>🔔</span>
+                <div class="small-avatar">🛡️</div>
+            </div>
+        </header>
+
+        <!-- OVERVIEW -->
+        <section id="overview">
+
+            <div class="welcome-banner">
+                <div>
+                    <span>SECURITY GUARD PORTAL</span>
+                    <h1>Welcome, <strong>Guard</strong> 👋</h1>
+                    <p>Monitor student movement and maintain hostel security.</p>
+                </div>
+
+                <div class="welcome-icon">🛡️</div>
+            </div>
+
+            <!-- STATISTICS -->
+            <div class="stats-grid">
+
+                <div class="stat-card purple-stat">
+                    <span>↗</span>
+                    <p>Approved Requests</p>
+                    <h2 id="approvedCount">--</h2>
+                </div>
+
+                <div class="stat-card pink-stat">
+                    <span>◷</span>
+                    <p>Students Currently Outside</p>
+                    <h2 id="outsideCount">--</h2>
+                </div>
+
+                <div class="stat-card orange-stat">
+                    <span>↗</span>
+                    <p>Today's Exits</p>
+                    <h2 id="todayExitCount">--</h2>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- APPROVED REQUESTS -->
+        <section class="dashboard-section dashboard-panel" id="approvedRequests">
+
+            <div class="section-title">
+                <div>
+                    <h2>Approved Exit Requests</h2>
+                    <p>Verify students before allowing them to leave.</p>
+                </div>
+
+                <button class="dashboard-button" onclick="loadApprovedRequests()">
+                    ↻ Refresh
+                </button>
+            </div>
+
+            <p id="requestMessage" class="status-message"></p>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Request ID</th>
+                            <th>Student</th>
+                            <th>Destination</th>
+                            <th>Expected Return</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="approvedRequestsTable">
+                        <tr>
+                            <td colspan="5">Loading requests...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </section>
+
+        <!-- STUDENTS OUTSIDE -->
+        <section class="dashboard-section dashboard-panel" id="outsideStudents">
+
+            <div class="section-title">
+                <div>
+                    <h2>Students Currently Outside</h2>
+                    <p>Mark students as returned when they enter the hostel.</p>
+                </div>
+
+                <button class="dashboard-button" onclick="loadOutsideStudents()">
+                    ↻ Refresh
+                </button>
+            </div>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Request ID</th>
+                            <th>Student</th>
+                            <th>Destination</th>
+                            <th>Exit Time</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="outsideStudentsTable">
+                        <tr>
+                            <td colspan="5">Loading students...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </section>
+
+        <!-- DAILY ACTIVITY -->
+        <section class="dashboard-section dashboard-panel" id="dailyActivity">
+
+            <div class="section-title">
+                <div>
+                    <h2>Today's Exit Records</h2>
+                    <p>Students who left the hostel today.</p>
+                </div>
+
+                <button class="dashboard-button" onclick="loadTodayExits()">
+                    ↻ Refresh
+                </button>
+            </div>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Request ID</th>
+                            <th>Student</th>
+                            <th>Destination</th>
+                            <th>Exit Time</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="todayExitsTable"></tbody>
+                </table>
+            </div>
+
+            <!-- RETURNS -->
+            <div class="section-title" style="margin-top:30px">
+                <div>
+                    <h2>Today's Return Records</h2>
+                    <p>Students who returned to the hostel today.</p>
+                </div>
+
+                <button class="dashboard-button" onclick="loadTodayReturns()">
+                    ↻ Refresh
+                </button>
+            </div>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Request ID</th>
+                            <th>Student</th>
+                            <th>Destination</th>
+                            <th>Return Time</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="todayReturnsTable"></tbody>
+                </table>
+            </div>
+
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="dashboard-footer">
+            Hostel EMS · Security Guard Portal · 2026
+        </footer>
+
+    </main>
+</div>
+
+<script src="guard.js"></script>
+
+</body>
+</html>
